@@ -20,17 +20,38 @@
     var CONFIG = {"hostname":"nebulesky.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="friends">
-<meta property="og:url" content="https://nebulesky.github.io/friends/index.html">
+  <meta name="description" content="Mavenmaven安装和配置1.解压maven压缩包2.配置环境变量      3.配置本地仓库    在idea里面配置Maven：  用idea创建java项目：  maven导入依赖1.在 pom.xml 中编写  标签 2.在  标签中使用  引入坐标定义坐标的 groupId，artifactId，version 3.点击刷新按钮，使坐标生效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven配置流程">
+<meta property="og:url" content="https://nebulesky.github.io/post/0.html">
 <meta property="og:site_name" content="NebuleSky">
+<meta property="og:description" content="Mavenmaven安装和配置1.解压maven压缩包2.配置环境变量      3.配置本地仓库    在idea里面配置Maven：  用idea创建java项目：  maven导入依赖1.在 pom.xml 中编写  标签 2.在  标签中使用  引入坐标定义坐标的 groupId，artifactId，version 3.点击刷新按钮，使坐标生效">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-06-16T05:01:28.000Z">
-<meta property="article:modified_time" content="2023-06-23T05:57:44.357Z">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251019652.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251019821.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251022350.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251022872.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251024347.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251025277.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251026751.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251029053.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251030665.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251056899.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251110730.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251117346.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251135102.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251137101.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251417330.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251418957.png">
+<meta property="og:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251418485.png">
+<meta property="article:published_time" content="2023-06-25T14:58:49.000Z">
+<meta property="article:modified_time" content="2023-06-25T15:00:30.617Z">
 <meta property="article:author" content="Xia&#96;blog">
+<meta property="article:tag" content="Mave">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251019652.png">
 
-<link rel="canonical" href="https://nebulesky.github.io/friends/">
+<link rel="canonical" href="https://nebulesky.github.io/post/0.html">
 
 
 <script id="page-configurations">
@@ -38,13 +59,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>friends | NebuleSky
-</title>
+  <title>Maven配置流程 | NebuleSky</title>
   
 
 
@@ -184,43 +204,130 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="zh-CN">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline">friends
-</h1>
-
-<div class="post-meta">
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nebulesky.github.io/post/0.html">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Xia`blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NebuleSky">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Maven配置流程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-06-25 22:58:49 / 修改时间：23:00:30" itemprop="dateCreated datePublished" datetime="2023-06-25T22:58:49+08:00">2023-06-25</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>153</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><h2 id="maven安装和配置"><a href="#maven安装和配置" class="headerlink" title="maven安装和配置"></a>maven安装和配置</h2><h3 id="1-解压maven压缩包"><a href="#1-解压maven压缩包" class="headerlink" title="1.解压maven压缩包"></a>1.解压maven压缩包</h3><h3 id="2-配置环境变量"><a href="#2-配置环境变量" class="headerlink" title="2.配置环境变量"></a>2.配置环境变量</h3><p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251019652.png" alt="image-20230625101908478"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251019821.png" alt="image-20230625101940744"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251022350.png" alt="image-20230625102252222"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251022872.png" alt="image-20230625102257751"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251024347.png" alt="image-20230625102401258"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251025277.png" alt="image-20230625102535200"></p>
+<h3 id="3-配置本地仓库"><a href="#3-配置本地仓库" class="headerlink" title="3.配置本地仓库"></a>3.配置本地仓库</h3><p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251026751.png" alt="image-20230625102638665"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251029053.png" alt="image-20230625102953003"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251030665.png" alt="image-20230625103007555"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251056899.png" alt="image-20230625105654795"></p>
+<h2 id="在idea里面配置Maven："><a href="#在idea里面配置Maven：" class="headerlink" title="在idea里面配置Maven："></a>在idea里面配置Maven：</h2><p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251110730.png" alt="image-20230625111006587"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251117346.png" alt="image-20230625111709243"></p>
+<h2 id="用idea创建java项目："><a href="#用idea创建java项目：" class="headerlink" title="用idea创建java项目："></a>用idea创建java项目：</h2><p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251135102.png" alt="image-20230625113507993"></p>
+<p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251137101.png" alt="image-20230625113727021"></p>
+<h2 id="maven导入依赖"><a href="#maven导入依赖" class="headerlink" title="maven导入依赖"></a>maven导入依赖</h2><h3 id="1-在-pom-xml-中编写-标签"><a href="#1-在-pom-xml-中编写-标签" class="headerlink" title="1.在 pom.xml 中编写  标签"></a>1.在 pom.xml 中编写 <dependencies> 标签</h3><p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251417330.png" alt="image-20230625141728227"></p>
+<h3 id="2-在-标签中使用-引入坐标定义坐标的-groupId，artifactId，version"><a href="#2-在-标签中使用-引入坐标定义坐标的-groupId，artifactId，version" class="headerlink" title="2.在  标签中使用  引入坐标定义坐标的 groupId，artifactId，version"></a>2.在 <dependencies> 标签中使用 <dependency> 引入坐标定义坐标的 groupId，artifactId，version</h3><p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251418957.png" alt="image-20230625141804897"></p>
+<h3 id="3-点击刷新按钮，使坐标生效"><a href="#3-点击刷新按钮，使坐标生效" class="headerlink" title="3.点击刷新按钮，使坐标生效"></a>3.点击刷新按钮，使坐标生效</h3><p><img src="https://trok-typora-img.oss-cn-guangzhou.aliyuncs.com/img/202306251418485.png" alt="image-20230625141835394"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Xia`blog
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://nebulesky.github.io/post/0.html" title="Maven配置流程">https://nebulesky.github.io/post/0.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
 </div>
 
-</header>
 
-      
-      
-      
-      <div class="post-body">
-          
-      </div>
-      
-      
-      
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Mave/" rel="tag"># Mave</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/f074b302.html" rel="prev" title="Maven配置流程">
+      <i class="fa fa-chevron-left"></i> Maven配置流程
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
+      </footer>
     
+  </article>
+  
+  
+  
 
-    
-    
-    
 
 
           </div>
@@ -271,6 +378,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Maven"><span class="nav-number">1.</span> <span class="nav-text">Maven</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#maven%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">maven安装和配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A7%A3%E5%8E%8Bmaven%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.解压maven压缩包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.配置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.配置本地仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8idea%E9%87%8C%E9%9D%A2%E9%85%8D%E7%BD%AEMaven%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">在idea里面配置Maven：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8idea%E5%88%9B%E5%BB%BAjava%E9%A1%B9%E7%9B%AE%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">用idea创建java项目：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maven%E5%AF%BC%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="nav-number">1.4.</span> <span class="nav-text">maven导入依赖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9C%A8-pom-xml-%E4%B8%AD%E7%BC%96%E5%86%99-%E6%A0%87%E7%AD%BE"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.在 pom.xml 中编写  标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%9C%A8-%E6%A0%87%E7%AD%BE%E4%B8%AD%E4%BD%BF%E7%94%A8-%E5%BC%95%E5%85%A5%E5%9D%90%E6%A0%87%E5%AE%9A%E4%B9%89%E5%9D%90%E6%A0%87%E7%9A%84-groupId%EF%BC%8CartifactId%EF%BC%8Cversion"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.在  标签中使用  引入坐标定义坐标的 groupId，artifactId，version</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%82%B9%E5%87%BB%E5%88%B7%E6%96%B0%E6%8C%89%E9%92%AE%EF%BC%8C%E4%BD%BF%E5%9D%90%E6%A0%87%E7%94%9F%E6%95%88"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.点击刷新按钮，使坐标生效</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
