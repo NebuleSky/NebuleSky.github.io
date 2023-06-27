@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nebulesky.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+
+  <meta name="description" content="Spring Boot 是一个基于 Spring 框架的快速开发应用程序的工具，它简化了 Spring 应用程序的配置和部署过程。本教程旨在为初学者提供关于 Spring Boot 的基础知识和使用指南。教程首先介绍了 Spring Boot 的概述，解释了它的设计原理和主要特点。它强调了 Spring Boot 的自动配置能力，以及如何利用 Starter 依赖简化项目的依赖管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot基础教程">
+<meta property="og:url" content="https://nebulesky.github.io/post/c21a73e5.html">
+<meta property="og:site_name" content="NebuleSky">
+<meta property="og:description" content="Spring Boot 是一个基于 Spring 框架的快速开发应用程序的工具，它简化了 Spring 应用程序的配置和部署过程。本教程旨在为初学者提供关于 Spring Boot 的基础知识和使用指南。教程首先介绍了 Spring Boot 的概述，解释了它的设计原理和主要特点。它强调了 Spring Boot 的自动配置能力，以及如何利用 Starter 依赖简化项目的依赖管理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226122458831.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226122811626.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226123021028.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226123627968.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226124251132.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226124505902.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226124632465.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226125420592.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226125909928.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226130032724.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226130522544.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226130533170.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226135642436.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226141600420.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226143002260.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226152840959.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226153911377.png?imageslim">
+<meta property="og:image" content="http://img.itzhameng.com/blog/image-20211226155755564.png?imageslim">
+<meta property="article:published_time" content="2023-06-27T03:09:11.000Z">
+<meta property="article:modified_time" content="2023-06-27T03:32:40.472Z">
+<meta property="article:author" content="Xia&#96;blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.itzhameng.com/blog/image-20211226122458831.png?imageslim">
+
+<link rel="canonical" href="https://nebulesky.github.io/post/c21a73e5.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SpringBoot基础教程 | NebuleSky</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="NebuleSky" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    
+    <a target="_blank" rel="noopener" href="https://github.com/NebuleSky/NebuleSky.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">NebuleSky</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">OnlyLoveXia</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nebulesky.github.io/post/c21a73e5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Xia`blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NebuleSky">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringBoot基础教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-06-27 11:09:11 / 修改时间：11:32:40" itemprop="dateCreated datePublished" datetime="2023-06-27T11:09:11+08:00">2023-06-27</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Spring Boot 是一个基于 Spring 框架的快速开发应用程序的工具，它简化了 Spring 应用程序的配置和部署过程。本教程旨在为初学者提供关于 Spring Boot 的基础知识和使用指南。教程首先介绍了 Spring Boot 的概述，解释了它的设计原理和主要特点。它强调了 Spring Boot 的自动配置能力，以及如何利用 Starter 依赖简化项目的依赖管理。</p>
+<span id="more"></span>
+
+<h1 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h1><h1 id="一、SpringBoot基础知识"><a href="#一、SpringBoot基础知识" class="headerlink" title="一、SpringBoot基础知识"></a>一、SpringBoot基础知识</h1><h2 id="1-1-约定优于配置"><a href="#1-1-约定优于配置" class="headerlink" title="1.1 约定优于配置"></a>1.1 约定优于配置</h2><blockquote>
+<p>Build Anything with Spring Boot：Spring Boot is the starting point for   building all Spring-based applications. Spring Boot is designed to get you up and running as quickly as possible, with minimal upfront configuration of   Spring.</p>
+</blockquote>
+<p>上面是引自官网的一段话，大概是说：  Spring Boot 是所有基于 Spring 开发的项目的起点。  Spring Boot 的设计是为了让你尽可能快的跑起来 Spring 应用程序并且尽可能减少你的配置文件。</p>
+<p><strong>约定优于配置</strong>（ Convention over Conﬁguration ），又称按约定编程，是一种软件设计范式。<br>本质上是说，系统、类库或框架应该假定合理的默认值，而非要求提供不必要的配置。比如说模型中有 一个名为User的类，那么数据库中对应的表就会默认命名为user。只有在偏离这一个约定的时候，例如 想要将该表命名为person ，才需要写有关这个名字的配置。<br>比如平时架构师搭建项目就是限制软件开发随便写代码，制定出一套规范，让开发人员按统一的要求进 行开发编码测试之类的，这样就加强了开发效率与审查代码效率。所以说写代码的时候就需要按要求命 名，这样统一规范的代码就有良好的可读性与维护性了<br>约定优于配置简单来理解，就是遵循约定</p>
+<h2 id="1-2-SpringBoot概念"><a href="#1-2-SpringBoot概念" class="headerlink" title="1.2 SpringBoot概念"></a>1.2 SpringBoot概念</h2><h3 id="1-2-1-spring优缺点分析"><a href="#1-2-1-spring优缺点分析" class="headerlink" title="1.2.1 spring优缺点分析"></a>1.2.1 spring优缺点分析</h3><p><strong>优点：</strong><br>spring是Java企业版(Java Enterprise Edition，JEE ，也称J2EE)的轻量级代替品。无需开发重量级的    Enterprise JavaBean(EJB)，Spring为企业级Java开发提供了一种相对简单的方法，通过依赖注入和面 向切面编程，用简单 的Java对象(Plain Old Java Object，POJO)实现了EJB的功能</p>
+<p><strong>缺点：</strong><br>虽然Spring的组件代码是轻量级的，但它的配置却是重量级的。一开始， Spring用XML配置，而且是很 多XML配 置。  Spring 2.5引入了基于注解的组件扫描，这消除了大量针对应用程序自身组件的显式XML 配置。  Spring 3.0引入 了基于Java的配置，这是一种类型安全的可重构配置方式，可以代替XML。</p>
+<p>所有这些配置都代表了开发时的损耗。因为在思考Spring特性配置和解决业务问题之间需要进行思维切  换，所以编 写配置挤占了编写应用程序逻辑的时间。和所有框架一样， Spring实用，但与此同时它要求 的回报也不少。</p>
+<p>除此之外，项目的依赖管理也是一件耗时耗力的事情。在环境搭建时，需要分析要导入哪些库的坐标， 而且还需要分析导入与之有依赖关系的其他库的坐标，一旦选错了依赖的版本，随之而来的不兼容问题 就会严重阻碍项目的开发进度</p>
+<h3 id="1-2-2-SpringBoot解决上述spring问题"><a href="#1-2-2-SpringBoot解决上述spring问题" class="headerlink" title="1.2.2 SpringBoot解决上述spring问题"></a>1.2.2 SpringBoot解决上述spring问题</h3><p>SpringBoot对上述Spring的缺点进行的改善和优化，基于约定优于配置的思想，可以让开发人员不必在 配置与逻辑 业务之间进行思维的切换，全身心的投入到逻辑业务的代码编写中，从而大大提高了开发的 效率，一定程度上缩短 了项目周期</p>
+<p><strong>起步依赖</strong><br>起步依赖本质上是一个Maven项目对象模型(Project Object Model，POM) ，定义了对其他库的传递依 赖，这些东西加在一起即支持某项功能。<br>简单的说，起步依赖就是将具备某种功能的坐标打包到一起，并提供一些默认的功能。</p>
+<p><strong>自动配置</strong><br>springboot的自动配置，指的是springboot ，会自动将一些配置类的bean注册进ioc容器，我们可以需 要的地方使用@autowired或者@resource等注解来使用它。<br>“自动”的表现形式就是我们只需要引我们想用功能的包，相关的配置我们完全不用管， springboot会自 动注入这些配置bean ，我们直接使用这些bean即可<br>springboot: 简单、快速、方便地搭建项目；对主流开发框架的无配置集成；极大提高了开发、部署效率</p>
+<h2 id="1-3-SpringBoot-案例实现"><a href="#1-3-SpringBoot-案例实现" class="headerlink" title="1.3 SpringBoot 案例实现"></a>1.3 SpringBoot 案例实现</h2><blockquote>
+<p>案例需求：请求Controller中的方法，并将返回值响应到页面</p>
+</blockquote>
+<p><strong>（ 1 ）使用Spring Initializr方式构建Spring Boot项目</strong><br>本质上说， Spring Initializr是一个Web应用，它提供了一个基本的项目结构，能够帮助我们快速 构建一个基础的Spring Boot项目</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226122458831.png?imageslim" alt="image-20211226122458831"></p>
+<p>ProjectSDK”用于设置创建项目使用的JDK版本，这里，使用之前初始化设置好的JDK版本即可；<br>在“Choose Initializr Service URL （选择初始化服务地址） ”下使用默认的初始化服务地址“<a target="_blank" rel="noopener" href="https://start.spring.io”进行spring/">https://start.spring.io”进行Spring</a> Boot项目创建（注意使用快速方式创建Spring Boot项目时，所在主机须在联网状态下）</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226122811626.png?imageslim" alt="image-20211226122811626"></p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226123021028.png?imageslim" alt="image-20211226123021028"></p>
+<p>Spring Boot项目就创建好了。创建好的Spring Boot项目结构如图：</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226123627968.png?imageslim" alt="image-20211226123627968"></p>
+<p>使用Spring Initializr方式构建的SpringBoot项目会默认生成项目启动类、存放前端静态资源和页 面的文件夹、编写项目配置的配置文件以及进行项目单元测试的测试类</p>
+<p><strong>（2） 创建一个用于Web访问的Controller</strong></p>
+<p><code>com.hzit.springboot_demo</code>包下创建名称为<code>controller</code>的包，在该包下创建一个请求处理控制类<code>HelloController </code>， 并编写一个请求处理方法（注意：<code>SpringbootDemoApplication.java</code>主程序需要和<code>controller</code>包，处在同一层级）</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226124251132.png?imageslim" alt="image-20211226124251132"></p>
+<p><strong><code>HelloController</code>具体内容如下：</strong></p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RestController</span> <span class="token comment" spellcheck="true">// 该注解为组合注解，等同于Spring中@Controller+@ResponseBody注解</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloController</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/hello"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">demo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token string">"你好 spring Boot"</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p><strong>(3) 运行项目</strong><br>运行主程序启动类SpringbootDemoApplication ，项目启动成功后，在控制台上会发现Spring Boot项目默认启动的端口号为8080 ，此时，可以在浏览器上访问“<a target="_blank" rel="noopener" href="http://localhost:8080/hello%E2%80%9D">http://localhost:8080/hello”</a></p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226124505902.png?imageslim" alt="image-20211226124505902"></p>
+<p>项目运行结果：页面输出的内容是“你好Spring Boot”，至此，构建Spring Boot项目就完成了</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226124632465.png?imageslim" alt="image-20211226124632465"></p>
+<p>附：如果出现乱码，尝试一下解决方案</p>
+<blockquote>
+<p>方案一：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>produces <span class="token operator">=</span> <span class="token string">"application/json; charset=utf-8"</span><span class="token punctuation">)</span>
+</code></pre>
+<p>方案二：</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token comment" spellcheck="true">#设置响应为utf-8</span>
+<span class="token attr-name">spring.http.encoding.force-response</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+</code></pre>
+</blockquote>
+<h2 id="1-4-单元测试与热部署"><a href="#1-4-单元测试与热部署" class="headerlink" title="1.4 单元测试与热部署"></a>1.4 单元测试与热部署</h2><h3 id="1-4-1-单元测试"><a href="#1-4-1-单元测试" class="headerlink" title="1.4.1 单元测试"></a>1.4.1 单元测试</h3><p>开发中，每当完成一个功能接口或业务方法的编写后，通常都会借助单元测试验证该功能是否正  确。  Spring Boot对项目的单元测试提供了很好的支持，在使用时，需要提前在项目的pom.xml文件中添加<code>spring-boot-starter-test</code>测试依赖启动器，可以通过相关注解实现单元测试<br>演示：<br><strong>1 ．添加spring-boot-starter-test测试依赖启动器</strong><br>在项目的pom.xml文件中添加spring-boot-starter-test测试依赖启动器，示例代码如下 ：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>注意：使用Spring Initializr方式搭建的Spring Boot项目，会自动加入spring-boot-starter-test测试依赖 启动器，无需再手动添加</p>
+<p><strong>2 ．编写单元测试类和测试方法</strong><br>使用Spring Initializr方式搭建的Spring Boot项目，会在src.test.java测试目录下自动创建与项目主程序 启动类对应的单元测试类</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span>SpringRunner<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 测试启动器，并加载Spring Boot测试注解</span>
+<span class="token annotation punctuation">@SpringBootTest</span>
+<span class="token comment" spellcheck="true">// 标记为Spring Boot单元测试类，并加载项目的ApplicationContext上下文环境</span>
+<span class="token keyword">class</span> <span class="token class-name">SpringbootDemoApplicationTests</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> HelloController demoController<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 自动创建的单元测试方法实例</span>
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">void</span> <span class="token function">contextLoads</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        String demo <span class="token operator">=</span> demoController<span class="token punctuation">.</span><span class="token function">demo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>demo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>上述代码中，先使用@Autowired注解注入了HelloController实例对象，然后在contextLoads() 方法中调用了HelloController类中对应的请求控制方法demo() ，并输出打印结果</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226125420592.png?imageslim" alt="image-20211226125420592"></p>
+<h3 id="1-4-2-热部署-可选"><a href="#1-4-2-热部署-可选" class="headerlink" title="1.4.2 热部署(可选)"></a>1.4.2 热部署(可选)</h3><p>在开发过程中，通常会对一段业务代码不断地修改测试，在修改之后往往需要重启服务，有些服 务需要加载很久才能启动成功，这种不必要的重复操作极大的降低了程序开发效率。为此，SpringBoot框架专门提供了进行热部署的依赖启动器，用于进行项目热部署。<br><mark>无需手动重启项目，但是修改以后项目还是会自动重启项目</mark><br>演示：<br><strong>1.添加spring-boot-devtools热部署依赖启动器</strong><br>在Spring Boot项目进行热部署测试之前，需要先在项目的pom.xml文件中添加spring-boot-devtools热<br>部署依赖启动器:</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 引入热部署依赖 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-devtools<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>由于使用的是IDEA开发工具，添加热部署依赖后可能没有任何效果，接下来还需要针对IDEA开发 工具进行热部署相关的功能设置</p>
+<p><strong>2.IDEA工具热部署设置</strong><br>选择IDEA工具界面的【File】-&gt;【Settings】选项，打开Compiler面板设置页面</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226125909928.png?imageslim" alt="image-20211226125909928"></p>
+<p>选择Build下的Compiler选项，在右侧勾选“Build project automatically”选项将项目设置为自动编 译，单击【Apply】→【OK】按钮保存设置</p>
+<p>在项目任意页面中使用组合快捷键<code>Ctrl+Shift+Alt+/</code>打开Maintenance选项框，选中并打开 Registry页面，具体如图1-17所示</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226130032724.png?imageslim" alt="image-20211226130032724"></p>
+<p>列表中找到<code>compiler.automake.allow.when.app.running</code> ，将该选项后的Value值勾选，用于指 定IDEA工具在程序运行过程中自动编译，最后单击【Close】按钮完成设置</p>
+<p><strong>3 ．热部署效果测试</strong></p>
+<p>页面原始输出的内容是“你好 spring Boot”。</p>
+<p>为了测试配置的热部署是否有效，接下来，在不关闭当前项目的情况下，将HelloController类中的请 求处理方法demo()的返回值修改为“你好 spring Boot，你好 Java”并保存，查看控制台信息会发现项目能够自动构 建和编译，说明项目热部署生效</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226130522544.png?imageslim" alt="image-20211226130522544"></p>
+<p>可以看出，浏览器输出了“你好 spring Boot，你好 Java” ，说明项目热部署配置成功</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226130533170.png?imageslim" alt="image-20211226130533170"></p>
+<h2 id="1-5-全局配置文件"><a href="#1-5-全局配置文件" class="headerlink" title="1.5 全局配置文件"></a>1.5 全局配置文件</h2><p>官方文档：<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties">https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties</a></p>
+<p>全局配置文件能够对一些默认配置值进行修改。  Spring Boot使用一个application.properties或者 application.yaml的文件作为全局配置文件，该文件存放在src&#x2F;main&#x2F;resource目录或者类路径 的&#x2F;conﬁg ，一般会选择resource目录。接下来，将针对这两种全局配置文件进行讲解 ：</p>
+<h3 id="1-5-1-application-properties配置文件"><a href="#1-5-1-application-properties配置文件" class="headerlink" title="1.5.1 application.properties配置文件"></a>1.5.1 application.properties配置文件</h3><p>使用Spring Initializr方式构建Spring Boot项目时，会在resource目录下自动生成一个空的 <code>application.properties</code>文件,<br>Spring Boot项目启动时会自动加载application.properties文件。<br>我们可以在application.properties文件中定义SpringBoot项目的相关属性，当然，这些相关属性可以 是系统属性、环境变量、命令参数等信息，也可以是自定义配置文件名称和位置</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">server.port</span><span class="token punctuation">=</span><span class="token attr-value">8081</span>
+<span class="token attr-name">spring.datasource.driver-class-name</span><span class="token punctuation">=</span><span class="token attr-value">com.mysql.jdbc.Driver</span>
+<span class="token attr-name">server.servlet.context-path</span><span class="token punctuation">=</span><span class="token attr-value">/boot</span>
+</code></pre>
+<p>接下来，通过一个案例对Spring Boot项目中application.properties配置文件的具体使用进行讲解 演示：<br>预先准备了两个实体类文件，后续会演示将application.properties配置文件中的自定义配置属性注入 到Person实体类的对应属性中</p>
+<p><strong>（ 1 ）先在项目的<code>com.hzit.springboot_demo</code>包下创建一个pojo包，并在该包下创建两个实体类Pet和Person</strong></p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Pet</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String type<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+    
+    <span class="token comment" spellcheck="true">// 省略属性getXX()和setXX()方法</span>
+    <span class="token comment" spellcheck="true">// 省略toString()方法</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>   <span class="token comment" spellcheck="true">//用于将Person类作为Bean注入到Spring容器中</span>
+<span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"person"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//将配置文件中以person开头的属性注入到该 类中</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//id</span>
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//名称</span>
+    <span class="token keyword">private</span> List hobby<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//爱好</span>
+
+    <span class="token keyword">private</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> family<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//家庭成员</span>
+    <span class="token keyword">private</span> Map map<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Pet pet<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//宠物</span>
+
+    <span class="token comment" spellcheck="true">// 省略属性getXX()和setXX()方法</span>
+    <span class="token comment" spellcheck="true">// 省略toString()方法</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>@ConﬁgurationProperties(preﬁx &#x3D; “person”)注解的作用是将配置文件中以<font color='red'>person开头</font>的属性值通过 setXX()注入到实体类对应属性中<br>@Component注解的作用是将当前注入属性值的Person类对象作为Bean组件放到Spring容器中，只有 这样才能被@ConﬁgurationProperties注解进行赋值</p>
+<p><strong>（ 2）打开项目的resources目录下的application.properties配置文件，在该配置文件中编写需要对 Person类设置的配置属性</strong></p>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">person.id</span><span class="token punctuation">=</span><span class="token attr-value">1001</span>
+<span class="token attr-name">person.name</span><span class="token punctuation">=</span><span class="token attr-value">翠花</span>
+<span class="token attr-name">person.hobby</span><span class="token punctuation">=</span><span class="token attr-value">吃饭,睡觉,打豆豆</span>
+<span class="token attr-name">person.family</span><span class="token punctuation">=</span><span class="token attr-value">张大毛,王老五</span>
+<span class="token attr-name">person.map.k1</span><span class="token punctuation">=</span><span class="token attr-value">v1</span>
+<span class="token attr-name">person.map.k2</span><span class="token punctuation">=</span><span class="token attr-value">v2</span>
+<span class="token attr-name">person.pet.type</span><span class="token punctuation">=</span><span class="token attr-value">dog</span>
+<span class="token attr-name">person.pet.name</span><span class="token punctuation">=</span><span class="token attr-value">来福</span>
+</code></pre>
+<p>编写application.properties配置文件时，由于要配置的Person对象属性是我们自定义的， Spring Boot无法自动识别，所以不会有任何书写提示。在实际开发中，为了出现代码提示的效果来方便配置， 在使用@ConﬁgurationProperties注解进行配置文件属性值注入时，可以在pom.xml文件中添加一个  Spring Boot提供的配置处理器依赖:</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-configuration-processor<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>optional</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>optional</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>在pom.xml中添加上述配置依赖后，还需要重新运行项目启动类或者使用“Ctrl+F9”快捷键（即Build Project）重构当前Spring Boot项目方可生效</p>
+<p><strong>（ 3 ）查看application.properties配置文件是否正确</strong></p>
+<p>同时查看属性配置效果，打开通过IDEA工具创建 的项目测试类，在该测试类中引入Person实体类Bean ，并进行输出测试</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span>SpringRunner<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@SpringBootTest</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PropertiesTests</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> Person person<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"person = "</span> <span class="token operator">+</span> person<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>打印结果：</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226135642436.png?imageslim" alt="image-20211226135642436"></p>
+<p>可以看出，测试方法test()运行成功，同时正确打印出了Person实体类对象。至此，说明 application.properties配置文件属性配置正确，并通过相关注解自动完成了属性注入</p>
+<h3 id="1-5-2-application-yaml配置文件"><a href="#1-5-2-application-yaml配置文件" class="headerlink" title="1.5.2 application.yaml配置文件"></a>1.5.2 application.yaml配置文件</h3><blockquote>
+<p>YAML(YAML Ain’t a Markup Language)不是一种标记语言的外语缩写  ；但为了强调这种语言以数据做为中心，而不是以置标语言为重点，而用返璞词重新命名。它是一种直观的能够被电脑识别的数据序列化格式，是一个可读性高并且容易被人类阅读，容易和脚本语言交互，用来表达资料序列的编程语言。–百度百科</p>
+</blockquote>
+<p>YAML文件格式是Spring Boot支持的一种JSON超集文件格式，相较于传统的Properties配置文件，YAML文件以数据为核心，是一种更为直观且容易被电脑识别的数据序列化格式。  application.yaml配置 文件的工作原理和application.properties是一样的，只不过yaml格式配置文件看起来更简洁一些。</p>
+<ul>
+<li>YAML文件的扩展名可以使用**.yml<strong>或者</strong>.yaml**。</li>
+<li>application.yml文件使用 “key: （空格） value”格式配置属性，使用缩进控制层级关系。</li>
+</ul>
+<p>这里，针对不同数据类型的属性值，介绍一下YAML<br><strong>（ 1）value值为普通数据类型（例如数字、字符串、布尔等）</strong><br>当YAML配置文件中配置的属性值为普通数据类型时，可以直接配置对应的属性值，同时对于字符 串类型的属性值，不需要额外添加引号，示例代码如下</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">server</span><span class="token punctuation">:</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8001</span>
+  <span class="token key atrule">servlet</span><span class="token punctuation">:</span>
+    <span class="token key atrule">context-path</span><span class="token punctuation">:</span> /hello
+</code></pre>
+<p>上述代码用于配置server的port和servlet属性属于一个级别，以上配置等价于properties文件中：</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">server.port</span><span class="token punctuation">=</span><span class="token attr-value">8001</span>
+<span class="token attr-name">server.servlet.context-path</span><span class="token punctuation">=</span><span class="token attr-value">/hello</span>
+</code></pre>
+<p><strong>（ 2）value值为数组和单列集合</strong></p>
+<p>当YAML配置文件中配置的属性值为数组或单列集合类型时，主要有两种书写方式：<strong>缩进式写法</strong>和<strong>行内式</strong>写法。</p>
+<p>其中，缩进式写法还有两种表示形式，示例代码如下</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">person</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hobby</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> play
+    <span class="token punctuation">-</span> read
+    <span class="token punctuation">-</span> sleep
+</code></pre>
+<p>或者</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">person</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hobby</span><span class="token punctuation">:</span>
+    play<span class="token punctuation">,</span>
+    read<span class="token punctuation">,</span>
+    sleep
+</code></pre>
+<p>上述代码中，在YAML配置文件中通过两种缩进式写法对person对象的单列集合（或数组）类型的爱好 hobby赋值为play、 read和sleep。其中一种形式为“- （空格）属性值” ，另一种形式为多个属性值之后 加英文逗号分隔（注意，最后一个属性值后不要加逗号）。</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">person</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hobby</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>play<span class="token punctuation">,</span>read<span class="token punctuation">,</span>sleep<span class="token punctuation">]</span>
+</code></pre>
+<p>通过上述示例对比发现， YAML配置文件的行内式写法更加简明、方便。另外，包含属性值的中括 号“[]”还可以进一步省略，在进行属性赋值时，程序会自动匹配和校对</p>
+<p><strong>（ 3）value值为Map集合和对象</strong><br>当YAML配置文件中配置的属性值为Map集合或对象类型时， YAML配置文件格式同样可以分为两种书写 方式：缩进式写法和行内式写法。其中，缩进式写法的示例代码如下</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">person</span><span class="token punctuation">:</span>
+  <span class="token key atrule">map</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k1</span><span class="token punctuation">:</span> v1
+    <span class="token key atrule">k2</span><span class="token punctuation">:</span> v2
+</code></pre>
+<p>对应的行内式写法示例代码如下</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">person</span><span class="token punctuation">:</span>
+  <span class="token key atrule">map</span><span class="token punctuation">:</span> &amp;<span class="token comment" spellcheck="true">#123;k1: v1,k2: v2&amp;#125;</span>
+</code></pre>
+<p>在YAML配置文件中，配置的属性值为Map集合或对象类型时，缩进式写法的形式按照YAML文件格式编<br>写即可，而行内式写法的属性值要用大括号“{}”包含。</p>
+<p>接下来，在Properties配置文件演示案例基础上，通过配置application.yaml配置文件对Person对象进 行赋值，具体使用如下<br>（ 1 ）在项目的resources目录下，新建一个application.yaml配置文件，在该配置文件中编写为Person<br>类设置的配置属性</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">person</span><span class="token punctuation">:</span>
+  <span class="token key atrule">id</span><span class="token punctuation">:</span> <span class="token number">1002</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> 张无忌
+  <span class="token key atrule">hobby</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>吃饭，睡觉，打豆豆<span class="token punctuation">]</span>
+  <span class="token key atrule">family</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>赵敏<span class="token punctuation">,</span>周芷若<span class="token punctuation">]</span>
+  <span class="token key atrule">map</span><span class="token punctuation">:</span> &amp;<span class="token comment" spellcheck="true">#123;k1: v1,k2: v2&amp;#125;</span>
+  <span class="token key atrule">pet</span><span class="token punctuation">:</span> &amp;<span class="token comment" spellcheck="true">#123;type: dog,name: 旺财&amp;#125;</span>
+</code></pre>
+<p><img src="http://img.itzhameng.com/blog/image-20211226141600420.png?imageslim" alt="image-20211226141600420"></p>
+<p>可以看出，测试方法conﬁgurationTest()同样运行成功，并正确打印出了Person实体类对象。<br>需要说明的是，本次使用application.yaml配置文件进行测试时需要提前将application.properties配置 文件中编写的配置注释，这是因为<mark>application.properties配置文件会覆盖application.yaml配置文件</mark></p>
+<h2 id="1-6-配置文件属性值的注入"><a href="#1-6-配置文件属性值的注入" class="headerlink" title="1.6 配置文件属性值的注入"></a>1.6 配置文件属性值的注入</h2><p>使用Spring Boot全局配置文件设置属性时：<br>如果配置属性是Spring Boot已有属性，例如服务端口server.port ，那么Spring Boot内部会自动扫描并 读取这些配置文件中的属性值并覆盖默认属性。<br>如果配置的属性是用户自定义属性，例如刚刚自定义的Person实体类属性，还必须在程序中注入这些配 置属性方可生效。<br>Spring Boot支持多种注入配置文件属性的方式，下面来介绍如何使用注解@ConﬁgurationProperties 和@Value注入属性</p>
+<h3 id="1-6-1-ConﬁgurationProperties注入属性"><a href="#1-6-1-ConﬁgurationProperties注入属性" class="headerlink" title="1.6.1 @ConﬁgurationProperties注入属性"></a>1.6.1 @ConﬁgurationProperties注入属性</h3><p>Spring Boot提供的@ConﬁgurationProperties注解用来快速、方便地将配置文件中的自定义属性值批 量注入到某个Bean对象的多个对应属性中。假设现在有一个配置文件，如果使用@ConﬁgurationProperties注入配置文件的属性，示例代码如下：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"person"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 属性的setXX()方法</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setId</span><span class="token punctuation">(</span><span class="token keyword">int</span> id<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>上述代码使用@Component和@ConﬁgurationProperties(preﬁx &#x3D; “person”)将配置文件中的每个属性 映射到person类组件中。<br>需要注意的是，使用@ConﬁgurationProperties</p>
+<h3 id="1-6-2-使用-Value注入属性"><a href="#1-6-2-使用-Value注入属性" class="headerlink" title="1.6.2 使用@Value注入属性"></a>1.6.2 使用@Value注入属性</h3><p>@Value注解是Spring框架提供的，用来读取配置文件中的属性值并逐个注入到Bean对象的对应属性  中， Spring Boot框架从Spring框架中对@Value注解进行了默认继承，所以在Spring Boot框架中还可 以使用该注解读取和注入配置文件属性值。使用@Value注入属性的示例代码如下</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&amp;#123;person.id&amp;#125;"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>上述代码中，使用@Component和@Value注入Person实体类的id属性。其中， @Value不仅可以将配置文件的属性注入Person的id属性，还可以直接给id属性赋值，这点是@ConﬁgurationProperties 不支持的</p>
+<p><strong>演示@Value注解读取并注入配置文件属性的使用:</strong></p>
+<p><strong>（ 1 ）在com.hzit.springboot_demo.pojo包下新创建一个实体类Student ，并使用@Value注解注入属性</strong></p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Student</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&amp;#123;person.id&amp;#125;"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&amp;#123;person.name&amp;#125;"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//名称</span>
+
+    <span class="token comment" spellcheck="true">//省略toString</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Student类使用@Value注解将配置文件的属性值读取和注入。<br>从上述示例代码可以看出，使用@Value注解方式需要对每一个属性注入设置，同时又免去了属性的setXX()方法</p>
+<p><strong>（ 2）再次打开测试类进行测试</strong></p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span>SpringRunner<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@SpringBootTest</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PropertiesTests</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">public</span> Student student<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"student = "</span> <span class="token operator">+</span> student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="http://img.itzhameng.com/blog/image-20211226143002260.png?imageslim" alt="image-20211226143002260"></p>
+<p>可以看出，测试方法test()运行成功，同时正确打印出了Student实体类对象。需要说明的 是，本示例中只是使用@Value注解对实例中Student对象的普通类型属性进行了赋值演示</p>
+<p>而@Value   注解对于包含Map集合、对象以及YAML文件格式的行内式写法的配置文件的属性注入都不支持，如果  赋值会出现错误</p>
+<h2 id="1-7-自定义配置"><a href="#1-7-自定义配置" class="headerlink" title="1.7 自定义配置"></a>1.7 自定义配置</h2><p>spring Boot免除了项目中大部分的手动配置，对于一些特定情况，我们可以通过修改全局配置文  件以适应具体生产环境，可以说，几乎所有的配置都可以写在application.peroperties文件中， Spring  Boot会自动加载全局配置文件从而免除我们手动加载的烦恼。<br>但是，如果我们自定义配置文件， Spring Boot是无法识别这些配置文件的，此时就需要我们手动加载。接下来，将针对Spring Boot的自定义配   置文件及其加载方式进行讲解</p>
+<h3 id="1-7-1-使用-PropertySource加载配置文件"><a href="#1-7-1-使用-PropertySource加载配置文件" class="headerlink" title="1.7.1 使用@PropertySource加载配置文件"></a>1.7.1 使用@PropertySource加载配置文件</h3><p>对于这种加载自定义配置文件的需求，可以使用@PropertySource注解结合@Conﬁguration注解  配置类的方式来实现。  @PropertySource注解用于指定自定义配置文件的具体位置和名称。同时，为了 保证Spring Boot能够扫描该注解，还需要类上添加@Conﬁguration注解将实体类作为自定义配置类。<br>当然，如果需要将自定义配置文件中的属性值注入到对应类的属性中，可以使用<br>@ConﬁgurationProperties或者@Value注解进行属性值注入<br>演示：<br>（ 1 ）打开Spring Boot项目的resources目录，在项目的类路径下新建一个test.properties自定义配 置文件，在该配置文件中编写需要设置的配置属性</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token comment" spellcheck="true">#对实体类对象MyProperties进行属性配置</span>
+<span class="token attr-name">test.id</span><span class="token punctuation">=</span><span class="token attr-value">110</span>
+<span class="token attr-name">test.name</span><span class="token punctuation">=</span><span class="token attr-value">test</span>
+</code></pre>
+<p>（ 2）在<code>com.hzit.springboot_demo.pojo</code>包下新创建一个配置类MyProperties ，提供test.properties自定义配置文件中对应的属性，并根据@PropertySource注解的使用进行相关配置</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>   <span class="token comment" spellcheck="true">// 自定义配置类</span>
+<span class="token annotation punctuation">@PropertySource</span><span class="token punctuation">(</span><span class="token string">"classpath:test.properties"</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">// 指定自定义配置文件位置和名称</span>
+<span class="token annotation punctuation">@EnableConfigurationProperties</span><span class="token punctuation">(</span>MyProperties<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 开启对应配置类的属性注入功 能</span>
+<span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"test"</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">// 指定配置文件注入属性前缀</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyProperties</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 省略属性getXX()和setXX()方法</span>
+    <span class="token comment" spellcheck="true">// 省略toString()方法</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>主要是一个自定义配置类，通过相关注解引入了自定义的配置文件，并完成了自定义属性值的注 入。示例中的几个注解，具体说明如下:</p>
+<ul>
+<li>@Conﬁguration注解表示当前类是一个自定义配置类，并添加为Spring容器的组件，这里也可以使用传统的@Component注解；</li>
+<li>@PropertySource(“classpath:test.properties”)注解指定了自定义配置文件的位置和名称，此示例表示自定义配置文件为classpath类路径下的test.properties文件；</li>
+<li>@ConﬁgurationProperties(preﬁx &#x3D; “test”)注解将上述自定义配置文件test.properties中以test开头的属性值注入到该配置类属性中。	</li>
+<li>如果配置类上使用的是@Component注解而非@Conﬁguration注解，那么@EnableConﬁgurationProperties注解还可以省略</li>
+</ul>
+<p>（ 3 ）进行测试</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> MyProperties myProperties<span class="token punctuation">;</span>
+<span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">myPropertiesTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>myProperties<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="http://img.itzhameng.com/blog/image-20211226152840959.png?imageslim" alt="image-20211226152840959"></p>
+<h3 id="1-7-2-Conﬁguration编写自定义配置类"><a href="#1-7-2-Conﬁguration编写自定义配置类" class="headerlink" title="1.7.2 @Conﬁguration编写自定义配置类"></a>1.7.2 @Conﬁguration编写自定义配置类</h3><p>在Spring Boot框架中，推荐使用配置类的方式向容器中添加和配置组件<br>在Spring Boot框架中，通常使用@Conﬁguration注解定义一个配置类， Spring Boot会自动扫描和识别 配置类，从而替换传统Spring框架中的XML配置文件。<br>当定义一个配置类后，还需要在类中的方法上使用@Bean注解进行组件配置，将方法的返回对象注入到 Spring容器中，并且组件名称默认使用的是方法名，当然也可以使用@Bean注解的name或value属性    自定义组件的名称</p>
+<p>演示：<br>（ 1 ）在项目下新建一个<code>com.hzit.springboot_demo.service</code>包，并在该包下新创建一个类MyService ，该类中不需要编写 任何代码</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyService</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>创建了一个空的MyService类，而该类目前没有添加任何配置和注解，因此还无法正常被Spring Boot扫 描和识别</p>
+<p>（ 2） 在项目的<code>com.hzit.springboot_demo.config</code>包下，新建一个类MyConﬁg ，并使用@Conﬁguration注解将该类声 明一个配置类，内容如下：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyConfig</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Bean</span>       <span class="token comment" spellcheck="true">// 将返回值对象作为组件添加到Spring容器中，该组件id默认为方法名</span>
+    <span class="token keyword">public</span> MyService <span class="token function">myService</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">MyService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>MyConﬁg是@Conﬁguration注解声明的配置类（类似于声明了一个XML配置文件），该配置类会</p>
+<p>被Spring Boot自动扫描识别；使用@Bean注解的myService()方法，其返回值对象会作为组件添加到了 Spring容器中（类似于XML配置文件中的标签配置），并且该组件的id默认是方法名myService</p>
+<p>（ 3 ）测试类</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> ApplicationContext applicationContext<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">iocTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    MyService myService <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>MyService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"myService = "</span> <span class="token operator">+</span> myService<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>applicationContext<span class="token punctuation">.</span><span class="token function">containsBean</span><span class="token punctuation">(</span><span class="token string">"myService"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>上述代码中，先通过@Autowired注解引入了Spring容器实例ApplicationContext ，然后在测试方法 iocTest()中测试查看该容器中是否包括id为myService的组件。</p>
+<p>执行测试方法iocTest() ，查看控制台输出效果，结果如下：</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226153911377.png?imageslim" alt="image-20211226153911377"></p>
+<p>从测试结果可以看出，测试方法iocTest()运行成功，显示运行结果为true ，表示Spirng的IOC容器中也 已经包含了id为myService的实例对象组件，说明使用自定义配置类的形式完成了向Spring容器进行组 件的添加和配置</p>
+<h2 id="1-8-随机数设置及参数间引用"><a href="#1-8-随机数设置及参数间引用" class="headerlink" title="1.8 随机数设置及参数间引用"></a>1.8 随机数设置及参数间引用</h2><p>在Spring Boot配置文件中设置属性时，除了可以像前面示例中显示的配置属性值外，还可以使用 <strong>随机值</strong>和参数间引用对属性值进行设置。下面，针对配置文件中这两种属性值的设置方式进行讲解</p>
+<h3 id="1-8-1随机值设置"><a href="#1-8-1随机值设置" class="headerlink" title="1.8.1随机值设置"></a>1.8.1随机值设置</h3><p>在Spring Boot配置文件中，随机值设置使用到了Spring Boot内嵌的<code> RandomValuePropertySource</code>类，对一些隐秘属性值或者测试用例属性值进行随机值注入<br>随机值设置的语法格式为${random.xx}，xx表示需要指定生成的随机数类型和范围，它可以生成<br>随机的整数、  uuid或字符串，示例代码如下</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token comment" spellcheck="true">#配置随机值</span>
+<span class="token attr-name">my.secret</span><span class="token punctuation">=</span><span class="token attr-value">$&amp;#123;random.value&amp;#125;</span>
+
+<span class="token comment" spellcheck="true"># 配置随机整数</span>
+<span class="token attr-name">my.number</span><span class="token punctuation">=</span><span class="token attr-value">$&amp;#123;random.int&amp;#125;</span>
+
+<span class="token comment" spellcheck="true"># 配置随机long类型数</span>
+<span class="token attr-name">my.bignumber</span><span class="token punctuation">=</span><span class="token attr-value">$&amp;#123;random.long&amp;#125;</span>
+
+<span class="token comment" spellcheck="true"># 配置随机uuid类型数</span>
+<span class="token attr-name">my.uuid</span><span class="token punctuation">=</span><span class="token attr-value">$&amp;#123;random.uuid&amp;#125;</span>
+
+<span class="token comment" spellcheck="true"># 配置小于10的随机整数</span>
+<span class="token attr-name">my.number.less.than.ten</span><span class="token punctuation">=</span><span class="token attr-value">$&amp;#123;random.int(10)&amp;#125;</span>
+
+<span class="token comment" spellcheck="true"># 配置范围在[1024,65536]之间的随机整数 </span>
+<span class="token attr-name">my.number.in.range</span><span class="token punctuation">=</span><span class="token attr-value">$&amp;#123;random.int[1024,65536]&amp;#125;</span>
+</code></pre>
+<p>上述代码中，使用RandomValuePropertySource类中random提供的随机数类型，分别展示了不 同类型随机值的设置示例</p>
+<h3 id="1-8-2参数间引用"><a href="#1-8-2参数间引用" class="headerlink" title="1.8.2参数间引用"></a>1.8.2参数间引用</h3><p>在Spring Boot配置文件中，配置文件的属性值还可以进行参数间的引用，也就是在后一个配置的 属性值中直接引用先前已经定义过的属性，这样可以直接解析其中的属性值了。<br>使用参数间引用的好处就是，在多个具有相互关联的配置属性中，只需要对其中一处属性预先配置，其 他地方都可以引用，省去了后续多处修改的麻烦<br>参数间引用的语法格式为${xx}，xx表示先前在配置文件中已经配置过的属性名，示例代码如下</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">app.name</span><span class="token punctuation">=</span><span class="token attr-value">MyApp</span>
+<span class="token attr-name">app.description</span><span class="token punctuation">=</span><span class="token attr-value">$&amp;#123;app.name&amp;#125; is a Spring Boot application</span>
+</code></pre>
+<p>上述参数间引用设置示例中，先设置了“app.name&#x3D;MyApp” ，将app.name属性的属性值设置为了 MyApp ；接着，在app.description属性配置中，使用${app.name}对前一个属性值进行了引用<br>接下来，通过一个案例来演示使用随机值设置以及参数间引用的方式进行属性设置的具体使用和 效果，具体步骤如下<br>（ 1 ）打开Spring Boot项目resources目录下的application.properties配置文件，在该配置文件中 分别通过随机值设置和参数间引用来配置两个测试属性，示例代码如下</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token comment" spellcheck="true"># 随机值设置以及参数间引用配置</span>
+<span class="token attr-name">tom.age</span><span class="token punctuation">=</span><span class="token attr-value">$&amp;#123;random.int[10,20]&amp;#125;</span>
+<span class="token attr-name">tom.description</span><span class="token punctuation">=</span><span class="token attr-value">tom的年龄可能是$&amp;#123;tom.age&amp;#125;</span>
+</code></pre>
+<p>在上述application.properties配置文件中，先使用随机值设置了tom.age属性的属性值，该属性 值设置在了[10,20]之间，随后使用参数间引用配置了tom.description属性</p>
+<p>（ 2）打开\项目的测试类，在该测试类中新增字符串类型的description属性，并将配置文件中的 tom.description属性进行注入，然后新增一个测试方法进行输出测试，示例代码如下</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&amp;#123;tom.description&amp;#125;"</span><span class="token punctuation">)</span>
+<span class="token keyword">private</span> String description<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">placeholderTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>description<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>上述代码中，通过@Value(“${tom.description}”)注解将配置文件中的tom.description属性值注入到了 对应的description属性中，在测试方法placeholderTest()中对该属性值进行了输出打印。</p>
+<p>执行测试方法placeholderTest() ，查看控制台输出效果</p>
+<p><img src="http://img.itzhameng.com/blog/image-20211226155755564.png?imageslim" alt="image-20211226155755564"></p>
+<p>可以看出，测试方法placeholderTest()运行成功，并打印出了属性description的注入内容，该内  容与配置文件中配置的属性值保持一致。接着，重复执行测试方法placeholderTest() ，查看控制台输出 语句中显示的年龄就会在[10,20]之间随机显示</p>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Xia`blog
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://nebulesky.github.io/post/c21a73e5.html" title="SpringBoot基础教程">https://nebulesky.github.io/post/c21a73e5.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/0.html" rel="prev" title="Maven配置流程">
+      <i class="fa fa-chevron-left"></i> Maven配置流程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81SpringBoot%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">2.</span> <span class="nav-text">一、SpringBoot基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%BA%A6%E5%AE%9A%E4%BC%98%E4%BA%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 约定优于配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-SpringBoot%E6%A6%82%E5%BF%B5"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 SpringBoot概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-spring%E4%BC%98%E7%BC%BA%E7%82%B9%E5%88%86%E6%9E%90"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.2.1 spring优缺点分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-SpringBoot%E8%A7%A3%E5%86%B3%E4%B8%8A%E8%BF%B0spring%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.2.</span> <span class="nav-text">1.2.2 SpringBoot解决上述spring问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-SpringBoot-%E6%A1%88%E4%BE%8B%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 SpringBoot 案例实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E7%83%AD%E9%83%A8%E7%BD%B2"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 单元测试与热部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="nav-number">2.4.1.</span> <span class="nav-text">1.4.1 单元测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-%E7%83%AD%E9%83%A8%E7%BD%B2-%E5%8F%AF%E9%80%89"><span class="nav-number">2.4.2.</span> <span class="nav-text">1.4.2 热部署(可选)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">1.5 全局配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-1-application-properties%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.5.1.</span> <span class="nav-text">1.5.1 application.properties配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-2-application-yaml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.5.2.</span> <span class="nav-text">1.5.2 application.yaml配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7%E5%80%BC%E7%9A%84%E6%B3%A8%E5%85%A5"><span class="nav-number">2.6.</span> <span class="nav-text">1.6 配置文件属性值的注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-1-Con%EF%AC%81gurationProperties%E6%B3%A8%E5%85%A5%E5%B1%9E%E6%80%A7"><span class="nav-number">2.6.1.</span> <span class="nav-text">1.6.1 @ConﬁgurationProperties注入属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-2-%E4%BD%BF%E7%94%A8-Value%E6%B3%A8%E5%85%A5%E5%B1%9E%E6%80%A7"><span class="nav-number">2.6.2.</span> <span class="nav-text">1.6.2 使用@Value注入属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE"><span class="nav-number">2.7.</span> <span class="nav-text">1.7 自定义配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-1-%E4%BD%BF%E7%94%A8-PropertySource%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.7.1.</span> <span class="nav-text">1.7.1 使用@PropertySource加载配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-2-Con%EF%AC%81guration%E7%BC%96%E5%86%99%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="nav-number">2.7.2.</span> <span class="nav-text">1.7.2 @Conﬁguration编写自定义配置类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-8-%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%AE%BE%E7%BD%AE%E5%8F%8A%E5%8F%82%E6%95%B0%E9%97%B4%E5%BC%95%E7%94%A8"><span class="nav-number">2.8.</span> <span class="nav-text">1.8 随机数设置及参数间引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-1%E9%9A%8F%E6%9C%BA%E5%80%BC%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.8.1.</span> <span class="nav-text">1.8.1随机值设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-2%E5%8F%82%E6%95%B0%E9%97%B4%E5%BC%95%E7%94%A8"><span class="nav-number">2.8.2.</span> <span class="nav-text">1.8.2参数间引用</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xia`blog"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Xia`blog</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NebuleSky" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NebuleSky" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sili26874@gmail.com" title="E-Mail → mailto:sili26874@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+<!-- recent posts -->
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xia`blog</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">16k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">15 分钟</span>
+</div>
+
+<script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("06/25/2023 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+
+  
+  <a target="_blank" rel="noopener" href="https://github.com/NebuleSky/NebuleSky.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+</body>
+</html>
