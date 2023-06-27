@@ -6,7 +6,7 @@
   <link href="https://nebulesky.github.io/atom.xml" rel="self"/>
   
   <link href="https://nebulesky.github.io/"/>
-  <updated>2023-06-27T03:32:40.472Z</updated>
+  <updated>2023-06-25T15:02:05.630Z</updated>
   <id>https://nebulesky.github.io/</id>
   
   <author>
@@ -15,21 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>SpringBoot基础教程</title>
-    <link href="https://nebulesky.github.io/post/c21a73e5.html"/>
-    <id>https://nebulesky.github.io/post/c21a73e5.html</id>
-    <published>2023-06-27T03:09:11.000Z</published>
-    <updated>2023-06-27T03:32:40.472Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Spring Boot 是一个基于 Spring 框架的快速开发应用程序的工具，它简化了 Spring 应用程序的配置和部署过程。本教程旨在为初学者提供关于 Spring Boot 的基础知识和使用指南。教程首先介绍了 Spring Boot 的概述，解释了它的设计原理和主要特点。它强调了 Spring Boot 的自动配置能力，以及如何利用 Starter 依赖简化项目的依赖管理。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>Maven配置流程</title>
